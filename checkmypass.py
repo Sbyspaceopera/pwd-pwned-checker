@@ -2,7 +2,7 @@ import requests
 import hashlib
 import sys
 
-# this api take 5 first SHA1 characters of the password as arg
+
 def request_api_data(query_char):
     """
     Do a request to the pwnedpasswords.com's API and get a list of hashes in response.
@@ -36,8 +36,9 @@ def pwned_api_check(password):
     Returns the correct hashed password
     """
     sha1password = hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
-    # split the password and the five first chars
-    # we don't want to the send the password through the web, so we will find it locally
+    # Split the password and the five first chars.
+    # We don't want to the send the password through the web,
+    #  so we will find it locally through a passwords list
     first5_char, tail = sha1password[:5], sha1password[5:]
     response = request_api_data(first5_char)
     return get_password_leaks_count(response, tail)
